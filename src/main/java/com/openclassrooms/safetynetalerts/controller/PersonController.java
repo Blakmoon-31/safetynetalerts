@@ -1,9 +1,12 @@
 package com.openclassrooms.safetynetalerts.controller;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.openclassrooms.safetynetalerts.model.Person;
 import com.openclassrooms.safetynetalerts.service.PersonService;
@@ -21,12 +25,14 @@ public class PersonController {
 	@Autowired
 	private PersonService personService;
 
+	private static Logger logger = LoggerFactory.getLogger(PersonController.class);
+
 	/**
 	 * Read - Get all persons
 	 * 
 	 * @return - An Iterable object of Person full filled
 	 */
-	@GetMapping("/person")
+	@GetMapping("/persons")
 	public List<Person> getPersons() {
 		return personService.getPersons();
 	}
@@ -39,8 +45,7 @@ public class PersonController {
 	 * @return - An object Person full filled
 	 */
 	@GetMapping("/person/{firstName}/{lastName}")
-	public Optional<Person> getPerson(@PathVariable("firstName") String firstName,
-			@PathVariable("lastName") String lastName) {
+	public Person getPerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
 		return personService.getPerson(firstName, lastName);
 	}
 
@@ -48,12 +53,25 @@ public class PersonController {
 	 * Create - Add a new person
 	 * 
 	 * @param person - An object Person
-	 * @return - The person object saved
+	 * @return - The HTTP code "201" and URI if object created, HTTP code "204" if
+	 *         not
 	 */
 	@PostMapping("/person")
-	public Person createPerson(@RequestBody Person person) {
-		// TODO manage possible error in return?
-		return personService.savePerson(person);
+	public ResponseEntity<Void> createPerson(@RequestBody Person person) {
+
+		Person personCreated = personService.savePerson(person);
+
+		if (personCreated == null) {
+			logger.error("Person not created");
+			return ResponseEntity.noContent().build();
+		}
+
+		logger.info("Person created");
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{firstName}/{lastName}")
+				.buildAndExpand(personCreated.getFirstName(), personCreated.getLastName()).toUri();
+
+		return ResponseEntity.created(location).build();
+
 	}
 
 	/**
@@ -62,16 +80,16 @@ public class PersonController {
 	 * @param firstName - The firstName of the person
 	 * @param lastName  - The lastName of the person
 	 * @param person    - An object Person
-	 * @return - The person object updated
+	 * @return - The Person object updated
 	 */
 	@PutMapping("/person/{firstName}/{lastName}")
 	public Person updatePerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName,
 			@RequestBody Person person) {
 		// TODO manage possible error in return?
-		Optional<Person> p = personService.getPerson(firstName, lastName);
-		if (p.isPresent()) {
-			Person currentPerson = p.get();
-
+		Person currentPerson = personService.getPerson(firstName, lastName);
+		if (currentPerson != null) {
+			logger.info("Person updated");
+			// Update all data received except first and last name
 			String address = person.getAddress();
 			if (address != null) {
 				currentPerson.setAddress(address);
@@ -99,12 +117,13 @@ public class PersonController {
 			personService.savePerson(currentPerson);
 			return currentPerson;
 		} else {
+			logger.error("The person to update doesn't exist");
 			return null;
 		}
 	}
 
 	/**
-	 * Delete an employee by his id
+	 * Delete a person by his id
 	 * 
 	 * @param firstName - The firstName of the person
 	 * @param lastName  - The lastName of the person

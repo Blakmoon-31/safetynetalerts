@@ -1,7 +1,6 @@
 package com.openclassrooms.safetynetalerts.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class PersonService {
 
 	}
 
-	public Optional<Person> getPerson(String firstName, String lastName) {
+	public Person getPerson(String firstName, String lastName) {
 		return personRepository.findByFirstNameAndLastName(firstName, lastName);
 	}
 

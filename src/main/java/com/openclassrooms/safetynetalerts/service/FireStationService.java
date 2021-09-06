@@ -18,4 +18,25 @@ public class FireStationService {
 		return fireStationRepository.findAll();
 	}
 
+	public FireStation getFireStationByAdress(String adress) {
+		return fireStationRepository.findByAddress(adress);
+	}
+
+	public List<FireStation> getFireStationByFireStation(String number) {
+		return fireStationRepository.findByStation(number);
+	}
+
+	public FireStation saveFireStation(FireStation fireStation) {
+		return fireStationRepository.save(fireStation);
+	}
+
+	public void deleteFireStationByAdress(String address) {
+		fireStationRepository.deleteByAddress(address);
+
+	}
+
+	public void deleteFireStationByFireStation(String number) {
+		fireStationRepository.deleteByFireStation(number);
+
+	}
 }

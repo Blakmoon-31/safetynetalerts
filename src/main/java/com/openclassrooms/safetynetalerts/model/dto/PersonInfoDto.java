@@ -1,24 +1,17 @@
-package com.openclassrooms.safetynetalerts.model;
+package com.openclassrooms.safetynetalerts.model.dto;
 
-import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
-public class MedicalRecord {
+public class PersonInfoDto {
 
 	private String firstName;
 	private String lastName;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	private LocalDate birthdate;
+	private String email;
+
 	private List<String> medications;
 	private List<String> allergies;
+
+	private int age;
 
 	/**
 	 * @return the firstName
@@ -49,17 +42,17 @@ public class MedicalRecord {
 	}
 
 	/**
-	 * @return the birthdate
+	 * @return the phone
 	 */
-	public LocalDate getBirthdate() {
-		return birthdate;
+	public String getEmail() {
+		return email;
 	}
 
 	/**
-	 * @param birthdate the birthdate to set
+	 * @param phone the phone to set
 	 */
-	public void setBirthdate(LocalDate birthdate) {
-		this.birthdate = birthdate;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	/**
@@ -90,9 +83,24 @@ public class MedicalRecord {
 		this.allergies = allergies;
 	}
 
+	/**
+	 * @return the age
+	 */
+	public int getAge() {
+		return age;
+	}
+
+	/**
+	 * @param age the age to set
+	 */
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	@Override
 	public String toString() {
-		return "{\"firstName\"=\"" + firstName + "\", \"lastName\"=\"" + lastName + "\", \"birthdate\"=\"" + birthdate
-				+ "\", \"medications\"=" + medications + ", \"allergies\"=" + allergies + "}";
+		return "firelist {\"firstName\"=\"" + firstName + "\", \"lastName\"=\"" + lastName + "\", \"email\"=\"" + email
+				+ "\", \"age\"=\"" + age + "\", \"medications\"=" + medications + ", \"allergies\"=" + allergies + "}";
 	}
+
 }

@@ -35,6 +35,6 @@ public class FireStation {
 
 	@Override
 	public String toString() {
-		return "FireStation {\"address\"=\"" + address + "\", \"station\"=\"" + station + "\"}";
+		return "{\"address\"=\"" + address + "\", \"station\"=\"" + station + "\"}";
 	}
 }
