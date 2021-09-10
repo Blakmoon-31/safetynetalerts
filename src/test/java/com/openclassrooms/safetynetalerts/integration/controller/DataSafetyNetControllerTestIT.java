@@ -20,8 +20,8 @@ public class DataSafetyNetControllerTestIT {
 
 	@Test
 	public void testGetPersonsForAStationContent() throws Exception {
-		mockMvc.perform(get("/firestation").param("stationNumber", "1")).andExpect(status().isOk());
-//				.andExpect(jsonPath("$..persons[0].lastName", is("[Duncan]")));
+		mockMvc.perform(get("/firestation").param("stationNumber", "1")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.persons[0].lastName", is("Duncan")));
 
 	}
 
@@ -64,8 +64,14 @@ public class DataSafetyNetControllerTestIT {
 
 	@Test
 	public void testGetChildAlertListForAnAddressContent() throws Exception {
-		mockMvc.perform(get("/childAlert").param("address", "947 E. Rose Dr")).andExpect(status().isOk());
-//				.andExpect(jsonPath("$..child[0].firstName", is("Kendrik")));
+		mockMvc.perform(get("/childAlert").param("address", "947 E. Rose Dr")).andExpect(status().isOk())
+				.andExpect(jsonPath("$.children[0].firstName", is("Kendrik")));
+	}
+
+	@Test
+	public void testGetPersonInfoByFirstNameAndLastNameWithFullName() throws Exception {
+		mockMvc.perform(get("/personInfo").param("firstName", "Allison").param("lastName", "Boyd"))
+				.andExpect(status().isOk()).andExpect(jsonPath("$.[0].address", is("112 Steppes Pl")));
 	}
 
 }

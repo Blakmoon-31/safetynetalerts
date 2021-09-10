@@ -97,9 +97,4 @@ public class FloodDto {
 		this.age = age;
 	}
 
-	@Override
-	public String toString() {
-		return "firelist {\"firstName\"=\"" + firstName + "\", \"lastName\"=\"" + lastName + "\", \"phone\"=\"" + phone
-				+ "\", \"age\"=\"" + age + "\", \"medications\"=" + medications + ", \"allergies\"=" + allergies + "}";
-	}
 }

@@ -52,7 +52,7 @@ public class DataSafetyNetControllerTest {
 
 	@Test
 	public void testGetPersonInfoByFirstNameAndLastNameWithFullName() throws Exception {
-		mockMvc.perform(get("/personInfo").param("lastName", "Allison").param("lastName", "Boyd"))
+		mockMvc.perform(get("/personInfo").param("firstName", "Allison").param("lastName", "Boyd"))
 				.andExpect(status().isOk());
 	}
 

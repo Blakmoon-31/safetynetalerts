@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynetalerts.dto.ChildAlertDto;
-import com.openclassrooms.safetynetalerts.dto.ChildDto;
+import com.openclassrooms.safetynetalerts.dto.ChildrenDto;
 import com.openclassrooms.safetynetalerts.dto.FireDto;
 import com.openclassrooms.safetynetalerts.dto.FloodDto;
-import com.openclassrooms.safetynetalerts.dto.OtherMemberDto;
+import com.openclassrooms.safetynetalerts.dto.OtherMembersDto;
 import com.openclassrooms.safetynetalerts.dto.PersonInfoDto;
 import com.openclassrooms.safetynetalerts.dto.StationDto;
 import com.openclassrooms.safetynetalerts.dto.StationPersonCountDto;
@@ -121,6 +121,7 @@ public class MapDtoService {
 		personInfoDto.setFirstName(person.getFirstName());
 		personInfoDto.setLastName(person.getLastName());
 		personInfoDto.setEmail(person.getEmail());
+		personInfoDto.setAddress(person.getAddress());
 
 		personInfoDto.setAllergies(medicalRecord.getAllergies());
 		personInfoDto.setMedications(medicalRecord.getMedications());
@@ -134,51 +135,51 @@ public class MapDtoService {
 		ChildAlertDto childAlert = new ChildAlertDto();
 
 		// Get childs at the address
-		List<ChildDto> childList = ((List<Person>) personRepository.findByAddress(address)).stream()
-				.map(this::convertToChildDto).collect(Collectors.toList());
+		List<ChildrenDto> childrenList = ((List<Person>) personRepository.findByAddress(address)).stream()
+				.map(this::convertToChildrenDto).collect(Collectors.toList());
 		// Remove null entries
-		childList.removeIf(f -> (f.getFirstName() == null));
+		childrenList.removeIf(f -> (f.getFirstName() == null));
 		// Test if there is at least one child, if yes continue with other members
-		if (childList.size() > 0) {
-			childAlert.setChild(childList);
+		if (childrenList.size() > 0) {
+			childAlert.setChildren(childrenList);
 
-			List<OtherMemberDto> otherMemberList = ((List<Person>) personRepository.findByAddress(address)).stream()
-					.map(this::convertToOtherMemberdDto).collect(Collectors.toList());
-			otherMemberList.removeIf(f -> (f.getFirstName() == null));
-			childAlert.setOtherMember(otherMemberList);
+			List<OtherMembersDto> otherMembersList = ((List<Person>) personRepository.findByAddress(address)).stream()
+					.map(this::convertToOtherMembersdDto).collect(Collectors.toList());
+			otherMembersList.removeIf(f -> (f.getFirstName() == null));
+			childAlert.setOtherMembers(otherMembersList);
 		}
 		return childAlert;
 	}
 
-	private ChildDto convertToChildDto(Person person) {
-		ChildDto childDto = new ChildDto();
+	private ChildrenDto convertToChildrenDto(Person person) {
+		ChildrenDto childrenDto = new ChildrenDto();
 
 		MedicalRecord medicalRecord = medicalRecordService.getMedicalRecord(person.getFirstName(),
 				person.getLastName());
 		int age = medicalRecordService.calculateAge(medicalRecord.getBirthdate());
 
 		if (age <= 18) {
-			childDto.setFirstName(person.getFirstName());
-			childDto.setLastName(person.getLastName());
-			childDto.setAge(age);
+			childrenDto.setFirstName(person.getFirstName());
+			childrenDto.setLastName(person.getLastName());
+			childrenDto.setAge(age);
 		}
 
-		return childDto;
+		return childrenDto;
 	}
 
-	private OtherMemberDto convertToOtherMemberdDto(Person person) {
-		OtherMemberDto otherMemberDto = new OtherMemberDto();
+	private OtherMembersDto convertToOtherMembersdDto(Person person) {
+		OtherMembersDto otherMembersDto = new OtherMembersDto();
 
 		MedicalRecord medicalRecord = medicalRecordService.getMedicalRecord(person.getFirstName(),
 				person.getLastName());
 		int age = medicalRecordService.calculateAge(medicalRecord.getBirthdate());
 
 		if (age > 18) {
-			otherMemberDto.setFirstName(person.getFirstName());
-			otherMemberDto.setLastName(person.getLastName());
+			otherMembersDto.setFirstName(person.getFirstName());
+			otherMembersDto.setLastName(person.getLastName());
 		}
 
-		return otherMemberDto;
+		return otherMembersDto;
 	}
 
 	public StationDto getListForAStation(String stationNumber) {

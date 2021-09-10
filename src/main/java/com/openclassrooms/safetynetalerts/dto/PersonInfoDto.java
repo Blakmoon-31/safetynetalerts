@@ -7,6 +7,7 @@ public class PersonInfoDto {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private String address;
 
 	private List<String> medications;
 	private List<String> allergies;
@@ -56,6 +57,20 @@ public class PersonInfoDto {
 	}
 
 	/**
+	 * @return the addressString
+	 */
+	public String getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param addressString the addressString to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	/**
 	 * @return the medications
 	 */
 	public List<String> getMedications() {
@@ -95,12 +110,6 @@ public class PersonInfoDto {
 	 */
 	public void setAge(int age) {
 		this.age = age;
-	}
-
-	@Override
-	public String toString() {
-		return "firelist {\"firstName\"=\"" + firstName + "\", \"lastName\"=\"" + lastName + "\", \"email\"=\"" + email
-				+ "\", \"age\"=\"" + age + "\", \"medications\"=" + medications + ", \"allergies\"=" + allergies + "}";
 	}
 
 }
