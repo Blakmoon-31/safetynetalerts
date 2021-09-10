@@ -1,15 +1,17 @@
-package com.openclassrooms.safetynetalerts.model.dto;
+package com.openclassrooms.safetynetalerts.dto;
 
 import java.util.List;
 
-public class PersonInfoDto {
+public class FireDto {
 
 	private String firstName;
 	private String lastName;
-	private String email;
+	private String phone;
 
 	private List<String> medications;
 	private List<String> allergies;
+
+	private String station;
 
 	private int age;
 
@@ -44,15 +46,15 @@ public class PersonInfoDto {
 	/**
 	 * @return the phone
 	 */
-	public String getEmail() {
-		return email;
+	public String getPhone() {
+		return phone;
 	}
 
 	/**
 	 * @param phone the phone to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	/**
@@ -84,6 +86,20 @@ public class PersonInfoDto {
 	}
 
 	/**
+	 * @return the station
+	 */
+	public String getStation() {
+		return station;
+	}
+
+	/**
+	 * @param station the station to set
+	 */
+	public void setStation(String station) {
+		this.station = station;
+	}
+
+	/**
 	 * @return the age
 	 */
 	public int getAge() {
@@ -99,8 +115,8 @@ public class PersonInfoDto {
 
 	@Override
 	public String toString() {
-		return "firelist {\"firstName\"=\"" + firstName + "\", \"lastName\"=\"" + lastName + "\", \"email\"=\"" + email
-				+ "\", \"age\"=\"" + age + "\", \"medications\"=" + medications + ", \"allergies\"=" + allergies + "}";
+		return "firelist {\"firstName\"=\"" + firstName + "\", \"lastName\"=\"" + lastName + "\", \"phone\"=\"" + phone
+				+ "\", \"age\"=\"" + age + "\", \"medications\"=" + medications + ", \"allergies\"=" + allergies
+				+ ", \"firestation\"=" + station + "}";
 	}
-
 }

@@ -1,20 +1,13 @@
 package com.openclassrooms.safetynetalerts.repository;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.openclassrooms.safetynetalerts.model.DataSafetyNet;
 import com.openclassrooms.safetynetalerts.model.FireStation;
-import com.openclassrooms.safetynetalerts.model.MedicalRecord;
 import com.openclassrooms.safetynetalerts.model.Person;
 
 @Repository
@@ -35,11 +28,11 @@ public class DataSafetyNetRepository {
 		return dataSafetyNet.getFirestations();
 
 	}
-
-	public List<MedicalRecord> getMedicalRecords() {
-		return dataSafetyNet.getMedicalrecords();
-
-	}
+//
+//	public List<MedicalRecord> getMedicalRecords() {
+//		return dataSafetyNet.getMedicalrecords();
+//
+//	}
 
 	public List<String> findPhoneListByFireStation(String firestation) {
 		List<FireStation> fireStationsList = fireStationRepository.findByStation(firestation);
@@ -72,31 +65,4 @@ public class DataSafetyNetRepository {
 		return emailList;
 	}
 
-	public void writeDataFileTEST() throws FileNotFoundException, IOException {
-		JsonGenerator jsonGenerator = new JsonFactory()
-				.createGenerator(new FileOutputStream("./src/main/resources/test_output.json"));
-		jsonGenerator.setPrettyPrinter(new DefaultPrettyPrinter());
-
-		jsonGenerator.writeStartObject();
-
-		jsonGenerator.writeArrayFieldStart("persons");
-		for (Person person : dataSafetyNet.getPersons())
-			jsonGenerator.writeObject(person.toString());
-		jsonGenerator.writeEndArray();
-
-		jsonGenerator.writeArrayFieldStart("firestations");
-		for (FireStation fireStation : dataSafetyNet.getFirestations())
-			jsonGenerator.writeObject(fireStation.toString());
-		jsonGenerator.writeEndArray();
-
-		jsonGenerator.writeArrayFieldStart("medicalrecords");
-		for (MedicalRecord medicalRecord : dataSafetyNet.getMedicalrecords())
-			jsonGenerator.writeObject(medicalRecord.toString());
-		jsonGenerator.writeEndArray();
-
-		jsonGenerator.writeEndObject();
-
-		jsonGenerator.flush();
-		jsonGenerator.close();
-	}
 }

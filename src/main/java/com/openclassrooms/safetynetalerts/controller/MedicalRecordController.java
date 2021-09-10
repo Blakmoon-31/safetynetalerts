@@ -32,7 +32,7 @@ public class MedicalRecordController {
 	@GetMapping("/medicalrecords")
 	public List<MedicalRecord> getMedicalrecords() {
 
-		return medicalRecordService.getMedicalrecords();
+		return medicalRecordService.getMedicalRecords();
 	}
 
 	/**

@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.openclassrooms.safetynetalerts.model.dto.ChildAlertDto;
-import com.openclassrooms.safetynetalerts.model.dto.FireDto;
-import com.openclassrooms.safetynetalerts.model.dto.FloodDto;
-import com.openclassrooms.safetynetalerts.model.dto.PersonInfoDto;
-import com.openclassrooms.safetynetalerts.model.dto.StationDto;
+import com.openclassrooms.safetynetalerts.dto.ChildAlertDto;
+import com.openclassrooms.safetynetalerts.dto.FireDto;
+import com.openclassrooms.safetynetalerts.dto.FloodDto;
+import com.openclassrooms.safetynetalerts.dto.PersonInfoDto;
+import com.openclassrooms.safetynetalerts.dto.StationDto;
 import com.openclassrooms.safetynetalerts.service.DataSafetyNetService;
 import com.openclassrooms.safetynetalerts.service.MapDtoService;
 
@@ -37,12 +37,12 @@ public class DataSafetyNetController {
 		return dataSafetyNetService.getPhoneAlertListForAFireStation(firestation);
 	}
 
-	@GetMapping("communityEmail")
+	@GetMapping("/communityEmail")
 	public List<String> getCommunityEmailListForACity(@RequestParam("city") String city) {
 		return dataSafetyNetService.getCommunityEmailListForACity(city);
 	}
 
-	@GetMapping("fire")
+	@GetMapping("/fire")
 	public List<FireDto> getFireListForAnAddress(@RequestParam("address") String address) {
 		return mapDtoService.getFireListForAnAddress(address);
 	}
@@ -64,9 +64,4 @@ public class DataSafetyNetController {
 		return mapDtoService.getChildAlertListForAnAddress(address);
 	}
 
-	@GetMapping("/output")
-	public void writeOutPutFile() {
-		dataSafetyNetService.writeOutPutFile();
-
-	}
 }

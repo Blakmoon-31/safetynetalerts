@@ -16,7 +16,7 @@ public class MedicalRecordService {
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
 
-	public List<MedicalRecord> getMedicalrecords() {
+	public List<MedicalRecord> getMedicalRecords() {
 		return medicalRecordRepository.findAll();
 	}
 

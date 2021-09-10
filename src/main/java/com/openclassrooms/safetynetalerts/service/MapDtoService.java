@@ -7,18 +7,18 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.safetynetalerts.dto.ChildAlertDto;
+import com.openclassrooms.safetynetalerts.dto.ChildDto;
+import com.openclassrooms.safetynetalerts.dto.FireDto;
+import com.openclassrooms.safetynetalerts.dto.FloodDto;
+import com.openclassrooms.safetynetalerts.dto.OtherMemberDto;
+import com.openclassrooms.safetynetalerts.dto.PersonInfoDto;
+import com.openclassrooms.safetynetalerts.dto.StationDto;
+import com.openclassrooms.safetynetalerts.dto.StationPersonCountDto;
+import com.openclassrooms.safetynetalerts.dto.StationPersonDto;
 import com.openclassrooms.safetynetalerts.model.FireStation;
 import com.openclassrooms.safetynetalerts.model.MedicalRecord;
 import com.openclassrooms.safetynetalerts.model.Person;
-import com.openclassrooms.safetynetalerts.model.dto.ChildAlertDto;
-import com.openclassrooms.safetynetalerts.model.dto.ChildDto;
-import com.openclassrooms.safetynetalerts.model.dto.FireDto;
-import com.openclassrooms.safetynetalerts.model.dto.FloodDto;
-import com.openclassrooms.safetynetalerts.model.dto.OtherMemberDto;
-import com.openclassrooms.safetynetalerts.model.dto.PersonInfoDto;
-import com.openclassrooms.safetynetalerts.model.dto.StationDto;
-import com.openclassrooms.safetynetalerts.model.dto.StationPersonCountDto;
-import com.openclassrooms.safetynetalerts.model.dto.StationPersonDto;
 import com.openclassrooms.safetynetalerts.repository.FireStationRepository;
 import com.openclassrooms.safetynetalerts.repository.PersonRepository;
 

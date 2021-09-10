@@ -3,6 +3,8 @@ package com.openclassrooms.safetynetalerts.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +24,8 @@ public class FireStationController {
 
 	@Autowired
 	private FireStationService fireStationService;
+
+	private static Logger logger = LoggerFactory.getLogger(PersonController.class);
 
 	/**
 	 * Read - Get all fire stations/addresses mapping
@@ -65,14 +69,22 @@ public class FireStationController {
 	@PostMapping("/firestation")
 	public ResponseEntity<Void> createFireStation(@RequestBody FireStation fireStation) {
 
+		if (fireStation.getAddress() == null || fireStation.getStation() == null) {
+			logger.error("Fire station mapping not created : no content in request body");
+			return ResponseEntity.noContent().build();
+
+		}
 		FireStation fireStationCreated = fireStationService.saveFireStation(fireStation);
 
-		if (fireStationCreated == null)
+		if (fireStationCreated.getAddress() == null) {
+			logger.error("Fire station mapping not created");
 			return ResponseEntity.noContent().build();
+
+		}
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/address/{address}")
 				.buildAndExpand(fireStationCreated.getAddress()).toUri();
-
+		logger.info("Fire station mapping created");
 		return ResponseEntity.created(location).build();
 	}
 
@@ -83,18 +95,18 @@ public class FireStationController {
 	 * @param fireStation - An object FireStation
 	 * @return - The FireStation object updated
 	 */
-	@PutMapping("firestation/{address}")
+	@PutMapping("/firestation/{address}")
 	public FireStation updateFireStation(@PathVariable("address") String address,
 			@RequestBody FireStation fireStation) {
-		FireStation currentAdress = fireStationService.getFireStationByAdress(address);
-		if (currentAdress != null) {
+		FireStation currentAddress = fireStationService.getFireStationByAdress(address);
+		if (currentAddress != null) {
 
 			String station = fireStation.getStation();
 			if (station != null) {
-				currentAdress.setStation(station);
+				currentAddress.setStation(station);
 			}
-			fireStationService.saveFireStation(currentAdress);
-			return currentAdress;
+			fireStationService.saveFireStation(currentAddress);
+			return currentAddress;
 		} else {
 			return null;
 		}

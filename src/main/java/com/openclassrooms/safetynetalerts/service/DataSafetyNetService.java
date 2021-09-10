@@ -1,7 +1,5 @@
 package com.openclassrooms.safetynetalerts.service;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,19 +70,6 @@ public class DataSafetyNetService {
 
 	public List<String> getCommunityEmailListForACity(String city) {
 		return dataSafetyNetRepository.findEmailListByCity(city);
-	}
-
-	public void writeOutPutFile() {
-		try {
-			dataSafetyNetRepository.writeDataFileTEST();
-		} catch (FileNotFoundException e) {
-			System.out.println("Fichier non trouvé");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("Autre erreur");
-			e.printStackTrace();
-		}
-
 	}
 
 }

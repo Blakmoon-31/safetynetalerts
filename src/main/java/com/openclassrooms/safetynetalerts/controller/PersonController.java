@@ -59,12 +59,12 @@ public class PersonController {
 	@PostMapping("/person")
 	public ResponseEntity<Void> createPerson(@RequestBody Person person) {
 
-		Person personCreated = personService.savePerson(person);
-
-		if (personCreated == null) {
-			logger.error("Person not created");
+		if (person.getFirstName() == null || person.getFirstName() == "") {
+			logger.error("Person not created : no data in request body");
 			return ResponseEntity.noContent().build();
 		}
+
+		Person personCreated = personService.savePerson(person);
 
 		logger.info("Person created");
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{firstName}/{lastName}")
@@ -115,6 +115,7 @@ public class PersonController {
 				currentPerson.setEmail(email);
 			}
 			personService.savePerson(currentPerson);
+			logger.info("Person updated");
 			return currentPerson;
 		} else {
 			logger.error("The person to update doesn't exist");

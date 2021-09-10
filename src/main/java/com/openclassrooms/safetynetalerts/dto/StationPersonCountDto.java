@@ -1,4 +1,4 @@
-package com.openclassrooms.safetynetalerts.model.dto;
+package com.openclassrooms.safetynetalerts.dto;
 
 public class StationPersonCountDto {
 
