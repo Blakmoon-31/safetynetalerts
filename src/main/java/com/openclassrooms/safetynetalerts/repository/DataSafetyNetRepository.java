@@ -24,16 +24,6 @@ public class DataSafetyNetRepository {
 
 	}
 
-	public List<FireStation> getFireStations() {
-		return dataSafetyNet.getFirestations();
-
-	}
-//
-//	public List<MedicalRecord> getMedicalRecords() {
-//		return dataSafetyNet.getMedicalrecords();
-//
-//	}
-
 	public List<String> findPhoneListByFireStation(String firestation) {
 		List<FireStation> fireStationsList = fireStationRepository.findByStation(firestation);
 		List<Person> personsList = dataSafetyNet.getPersons();

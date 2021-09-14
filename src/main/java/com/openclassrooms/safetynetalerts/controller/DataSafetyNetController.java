@@ -27,7 +27,6 @@ public class DataSafetyNetController {
 	@GetMapping("/firestation")
 	public StationDto getPersonsForAStation(@RequestParam("stationNumber") String stationNumber) {
 
-//		return dataSafetyNetService.getPersonsForAListOfStation(stationList);
 		return mapDtoService.getListForAStation(stationNumber);
 	}
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.openclassrooms.safetynetalerts.model.FireStation;
 import com.openclassrooms.safetynetalerts.model.Person;
@@ -20,30 +19,6 @@ public class DataSafetyNetService {
 
 	@Autowired
 	private FireStationRepository fireStationRepository;
-
-	public List<Person> getPersonsForAListOfStation(
-			@RequestParam(value = "stationNumber", required = false) List<String> stationList) {
-
-		List<Person> listOfPersons = dataSafetyNetRepository.getPersons();
-		List<FireStation> listOfStations = dataSafetyNetRepository.getFireStations();
-
-		List<Person> listOfPersonsForStationList = new ArrayList<Person>();
-
-		for (FireStation lfs : listOfStations) {
-			for (String stationNumber : stationList) {
-				if (lfs.getStation().equals(stationNumber)) {
-					for (Person lp : listOfPersons) {
-						if (lp.getAddress().equals(lfs.getAddress())) {
-							listOfPersonsForStationList.add(lp);
-						}
-					}
-				}
-			}
-		}
-
-		return listOfPersonsForStationList;
-
-	}
 
 	public List<Person> getPersonsForAStation(String station) {
 

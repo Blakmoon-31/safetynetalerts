@@ -1,7 +1,9 @@
 package com.openclassrooms.safetynetalerts.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.openclassrooms.safetynetalerts.dto.ChildAlertDto;
 import com.openclassrooms.safetynetalerts.dto.ChildrenDto;
 import com.openclassrooms.safetynetalerts.dto.FireDto;
 import com.openclassrooms.safetynetalerts.dto.FloodDto;
+import com.openclassrooms.safetynetalerts.dto.FloodInhabitantsDto;
 import com.openclassrooms.safetynetalerts.dto.OtherMembersDto;
 import com.openclassrooms.safetynetalerts.dto.PersonInfoDto;
 import com.openclassrooms.safetynetalerts.dto.StationDto;
@@ -64,26 +67,57 @@ public class MapDtoService {
 	}
 
 	public List<FloodDto> getFloodListForAListOfStations(List<String> stationList) {
-		return ((List<Person>) dataSafetyNetService.getPersonsForAListOfStation(stationList)).stream()
-				.map(this::convertToFloodDto).collect(Collectors.toList());
+
+		List<FireStation> fireStationList = fireStationRepository.findAll();
+		List<FloodDto> floodList = new ArrayList<FloodDto>();
+
+		// List of covered addresses to avoid duplicated address
+		Set<String> addressMapping = new HashSet<String>();
+
+		for (String s : stationList) {
+			for (FireStation fs : fireStationList) {
+				if (fs.getStation().equals(s)) {
+					if (addressMapping.add(fs.getAddress())) {
+						floodList.add(convertToFloodDto(fs.getAddress()));
+					}
+
+				}
+			}
+		}
+
+		return floodList;
 	}
 
-	private FloodDto convertToFloodDto(Person person) {
+	private FloodDto convertToFloodDto(String address) {
 		FloodDto floodDto = new FloodDto();
+
+		floodDto.setAddress(address);
+
+		List<FloodInhabitantsDto> inhabitantsList = ((List<Person>) personRepository.findByAddress(address)).stream()
+				.map(this::convertToFloodInhabitantsDto).collect(Collectors.toList());
+
+		floodDto.setInhabitants(inhabitantsList);
+
+		return floodDto;
+	}
+
+	private FloodInhabitantsDto convertToFloodInhabitantsDto(Person person) {
+		FloodInhabitantsDto inhabitant = new FloodInhabitantsDto();
 
 		MedicalRecord medicalRecord = medicalRecordService.getMedicalRecord(person.getFirstName(),
 				person.getLastName());
 
-		floodDto.setFirstName(person.getFirstName());
-		floodDto.setLastName(person.getLastName());
-		floodDto.setPhone(person.getPhone());
+		inhabitant.setFirstName(person.getFirstName());
+		inhabitant.setLastName(person.getLastName());
+		inhabitant.setPhone(person.getPhone());
 
-		floodDto.setAllergies(medicalRecord.getAllergies());
-		floodDto.setMedications(medicalRecord.getMedications());
+		inhabitant.setMedications(medicalRecord.getMedications());
+		inhabitant.setAllergies(medicalRecord.getAllergies());
 
-		floodDto.setAge(medicalRecordService.calculateAge(medicalRecord.getBirthdate()));
+		inhabitant.setAge(medicalRecordService.calculateAge(medicalRecord.getBirthdate()));
 
-		return floodDto;
+		return inhabitant;
+
 	}
 
 	public List<PersonInfoDto> getPersonInfoByFirstNameAndLastName(String firstName, String lastName) {
@@ -147,8 +181,12 @@ public class MapDtoService {
 					.map(this::convertToOtherMembersdDto).collect(Collectors.toList());
 			otherMembersList.removeIf(f -> (f.getFirstName() == null));
 			childAlert.setOtherMembers(otherMembersList);
+
+			return childAlert;
+		} else {
+			return null;
 		}
-		return childAlert;
+
 	}
 
 	private ChildrenDto convertToChildrenDto(Person person) {
