@@ -34,6 +34,7 @@ public class PersonController {
 	 */
 	@GetMapping("/persons")
 	public List<Person> getPersons() {
+		logger.info("Persons list requested");
 		return personService.getPersons();
 	}
 
@@ -46,6 +47,7 @@ public class PersonController {
 	 */
 	@GetMapping("/person/{firstName}/{lastName}")
 	public Person getPerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
+		logger.info("One person requested");
 		return personService.getPerson(firstName, lastName);
 	}
 
@@ -130,7 +132,8 @@ public class PersonController {
 	 * @param lastName  - The lastName of the person
 	 */
 	@DeleteMapping("/person/{firstName}/{lastName}")
-	public Person deletePerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
+	public Person deletePerson(@PathVariable(value = "firstName", required = true) String firstName,
+			@PathVariable(value = "lastName", required = true) String lastName) {
 		personService.deletePerson(firstName, lastName);
 		// TODO Test result
 		return null;

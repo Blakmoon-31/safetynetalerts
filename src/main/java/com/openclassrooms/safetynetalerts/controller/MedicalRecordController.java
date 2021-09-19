@@ -4,6 +4,8 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +26,8 @@ public class MedicalRecordController {
 	@Autowired
 	private MedicalRecordService medicalRecordService;
 
+	private static Logger logger = LoggerFactory.getLogger(MedicalRecordController.class);
+
 	/**
 	 * Read - Get all medical records
 	 * 
@@ -31,7 +35,7 @@ public class MedicalRecordController {
 	 */
 	@GetMapping("/medicalrecords")
 	public List<MedicalRecord> getMedicalrecords() {
-
+		logger.info("Medical records list requested");
 		return medicalRecordService.getMedicalRecords();
 	}
 
@@ -45,6 +49,7 @@ public class MedicalRecordController {
 	@GetMapping("/medicalrecord/{firstName}/{lastName}")
 	public MedicalRecord getMedicalRecord(@PathVariable("firstName") String firstName,
 			@PathVariable("lastName") String lastName) {
+		logger.info("Medical record for a person list requested");
 		return medicalRecordService.getMedicalRecord(firstName, lastName);
 	}
 
@@ -62,7 +67,7 @@ public class MedicalRecordController {
 
 		if (medicalRecordCreated == null)
 			return ResponseEntity.noContent().build();
-
+		logger.info("Medical record created");
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{firstName}/{lastName}")
 				.buildAndExpand(medicalRecordCreated.getFirstName(), medicalRecordCreated.getLastName()).toUri();
 
@@ -100,8 +105,10 @@ public class MedicalRecordController {
 				currentMedicalRecord.setAllergies(allergies);
 			}
 			medicalRecordService.saveMedicalRecord(currentMedicalRecord);
+			logger.info("Medical record of a person updated");
 			return currentMedicalRecord;
 		} else {
+			logger.info("Medical record not updated");
 			return null;
 		}
 	}
@@ -113,8 +120,9 @@ public class MedicalRecordController {
 	 * @param lastName  - The lastName of the concerned person
 	 */
 	@DeleteMapping("/medicalrecord/{firstName}/{lastName}")
-	public void deleteMedicalRecord(@PathVariable("firstName") String firstName,
-			@PathVariable("lastName") String lastName) {
+	public void deleteMedicalRecord(@PathVariable(value = "firstName", required = true) String firstName,
+			@PathVariable(value = "lastName", required = true) String lastName) {
+		logger.info("Medical record of a person deleted");
 		medicalRecordService.deleteMedicalRecord(firstName, lastName);
 	}
 }

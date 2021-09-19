@@ -3,6 +3,8 @@ package com.openclassrooms.safetynetalerts.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +17,10 @@ public class PersonRepository {
 	@Autowired
 	private DataSafetyNet dataSafetyNet;
 
+	private static Logger logger = LoggerFactory.getLogger(PersonRepository.class);
+
 	public List<Person> findAll() {
+		logger.debug("Persons list found");
 		return dataSafetyNet.getPersons();
 	}
 
@@ -28,7 +33,7 @@ public class PersonRepository {
 				resultPerson = p;
 			}
 		}
-
+		logger.debug("Person found by first and last name");
 		return resultPerson;
 	}
 
@@ -41,7 +46,7 @@ public class PersonRepository {
 				resultPerson.add(p);
 			}
 		}
-
+		logger.debug("Persons list found by first name");
 		return resultPerson;
 	}
 
@@ -54,7 +59,7 @@ public class PersonRepository {
 				resultPersonList.add(p);
 			}
 		}
-
+		logger.debug("Persons list found by last name");
 		return resultPersonList;
 	}
 
@@ -67,12 +72,12 @@ public class PersonRepository {
 				resultPersonList.add(p);
 			}
 		}
-
+		logger.debug("Persons list found by address");
 		return resultPersonList;
 	}
 
 	public Person save(Person person) {
-		// TODO Add person in data.json
+
 		List<Person> personsInData = dataSafetyNet.getPersons();
 		boolean exist = false;
 		// If person's first and last names already in list, update
@@ -86,21 +91,22 @@ public class PersonRepository {
 				personsInData.get(i).setEmail(person.getEmail());
 				personsInData.get(i).setPhone(person.getPhone());
 				exist = true;
+				logger.debug("Person updated");
 			}
 		}
 		// If person not in list, add
 		if (exist == false) {
 			personsInData.add(person);
+			logger.debug("Person created");
 		}
 		// Update the global data
 		dataSafetyNet.setPersons(personsInData);
 
-		// manage possible error in return ?
 		return person;
 	}
 
 	public void deleteByFirstNameAndLastName(String firstName, String lastName) {
-		// TODO Delete person in data.json
+
 		List<Person> personsInData = dataSafetyNet.getPersons();
 		boolean deleted = false;
 		// If person's first and last names exist in list, remove it from list
@@ -110,9 +116,9 @@ public class PersonRepository {
 				personsInData.remove(i);
 				dataSafetyNet.setPersons(personsInData);
 				deleted = true;
+				logger.debug("Person deleted");
 			}
 		}
-		// manage possible error in return ?
 
 	}
 

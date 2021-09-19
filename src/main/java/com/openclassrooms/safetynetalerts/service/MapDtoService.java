@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,10 @@ public class MapDtoService {
 	@Autowired
 	private DataSafetyNetService dataSafetyNetService;
 
+	private static Logger logger = LoggerFactory.getLogger(MapDtoService.class);
+
 	public List<FireDto> getFireListForAnAddress(String address) {
+		logger.debug("Fire list to find");
 		return ((List<Person>) personRepository.findByAddress(address)).stream().map(this::convertToFireDto)
 				.collect(Collectors.toList());
 	}
@@ -63,6 +68,7 @@ public class MapDtoService {
 
 		fireDto.setStation(station.getStation());
 
+		logger.debug("Fire list converted in DTO");
 		return fireDto;
 	}
 
@@ -84,7 +90,7 @@ public class MapDtoService {
 				}
 			}
 		}
-
+		logger.debug("Flood list to find");
 		return floodList;
 	}
 
@@ -98,6 +104,7 @@ public class MapDtoService {
 
 		floodDto.setInhabitants(inhabitantsList);
 
+		logger.debug("Flood list converted in DTO");
 		return floodDto;
 	}
 
@@ -115,7 +122,7 @@ public class MapDtoService {
 		inhabitant.setAllergies(medicalRecord.getAllergies());
 
 		inhabitant.setAge(medicalRecordService.calculateAge(medicalRecord.getBirthdate()));
-
+		logger.debug("Converting in inhabitant DTO for Flood list DTO");
 		return inhabitant;
 
 	}
@@ -126,17 +133,21 @@ public class MapDtoService {
 			List<PersonInfoDto> personInfoDtoList = new ArrayList<PersonInfoDto>();
 
 			personInfoDtoList.add(convertToPersonInfoDto(person));
+			logger.debug("Person info DTO returned");
 			return personInfoDtoList;
 
 		} else {
 			if (firstName != null && lastName == null) {
+				logger.debug("Person info DTO by first name returned");
 				return ((List<Person>) personRepository.findByFirstName(firstName)).stream()
 						.map(this::convertToPersonInfoDto).collect(Collectors.toList());
 			} else {
 				if (firstName == null && lastName != null) {
+					logger.debug("Person info DTO by last name returned");
 					return ((List<Person>) personRepository.findByLastName(lastName)).stream()
 							.map(this::convertToPersonInfoDto).collect(Collectors.toList());
 				} else {
+					logger.debug("Person info DTO list returned");
 					return ((List<Person>) personRepository.findAll()).stream().map(this::convertToPersonInfoDto)
 							.collect(Collectors.toList());
 				}
@@ -162,6 +173,7 @@ public class MapDtoService {
 
 		personInfoDto.setAge(medicalRecordService.calculateAge(medicalRecord.getBirthdate()));
 
+		logger.debug("Person info converted in DTO");
 		return personInfoDto;
 	}
 
@@ -182,6 +194,7 @@ public class MapDtoService {
 			otherMembersList.removeIf(f -> (f.getFirstName() == null));
 			childAlert.setOtherMembers(otherMembersList);
 
+			logger.debug("Child alert list to convert in DTO");
 			return childAlert;
 		} else {
 			return null;
@@ -202,6 +215,7 @@ public class MapDtoService {
 			childrenDto.setAge(age);
 		}
 
+		logger.debug("Child alert list converted in DTO");
 		return childrenDto;
 	}
 
@@ -217,6 +231,7 @@ public class MapDtoService {
 			otherMembersDto.setLastName(person.getLastName());
 		}
 
+		logger.debug("Other members for Child alert list converted in DTO");
 		return otherMembersDto;
 	}
 
@@ -245,6 +260,7 @@ public class MapDtoService {
 		stationCountDto.setAdults(adultCount);
 		stationDto.setCount(stationCountDto);
 
+		logger.debug("List of persons for a station converted in DTO");
 		return stationDto;
 	}
 
@@ -256,6 +272,7 @@ public class MapDtoService {
 		stationPersonDto.setAddress(person.getAddress());
 		stationPersonDto.setPhone(person.getPhone());
 
+		logger.debug("List of persons converted in DTO for station list");
 		return stationPersonDto;
 	}
 }

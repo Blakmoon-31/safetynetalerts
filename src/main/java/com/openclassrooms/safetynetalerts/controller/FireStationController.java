@@ -25,7 +25,7 @@ public class FireStationController {
 	@Autowired
 	private FireStationService fireStationService;
 
-	private static Logger logger = LoggerFactory.getLogger(PersonController.class);
+	private static Logger logger = LoggerFactory.getLogger(FireStationController.class);
 
 	/**
 	 * Read - Get all fire stations/addresses mapping
@@ -34,6 +34,7 @@ public class FireStationController {
 	 */
 	@GetMapping("/firestations")
 	public List<FireStation> getFireStations() {
+		logger.info("Fire stations mapping list requested");
 		return fireStationService.getFireStations();
 	}
 
@@ -45,6 +46,7 @@ public class FireStationController {
 	 */
 	@GetMapping("/firestation/address/{adress}")
 	public FireStation getFireStationByAdress(@PathVariable("adress") String adress) {
+		logger.info("Fire station for an address requested");
 		return fireStationService.getFireStationByAdress(adress);
 	}
 
@@ -56,6 +58,7 @@ public class FireStationController {
 	 */
 	@GetMapping("/firestation/station/{number}")
 	public List<FireStation> getFireStationByFireStation(@PathVariable("number") String number) {
+		logger.info("Addresses list for a station requested");
 		return fireStationService.getFireStationByFireStation(number);
 	}
 
@@ -77,7 +80,7 @@ public class FireStationController {
 		FireStation fireStationCreated = fireStationService.saveFireStation(fireStation);
 
 		if (fireStationCreated.getAddress() == null) {
-			logger.error("Fire station mapping not created");
+			logger.error("Fire station mapping not created : station number missing");
 			return ResponseEntity.noContent().build();
 
 		}
@@ -106,8 +109,10 @@ public class FireStationController {
 				currentAddress.setStation(station);
 			}
 			fireStationService.saveFireStation(currentAddress);
+			logger.info("Fire station mapping updated");
 			return currentAddress;
 		} else {
+			logger.info("Fire station mapping not updated");
 			return null;
 		}
 	}
@@ -118,7 +123,8 @@ public class FireStationController {
 	 * @param address - An address
 	 */
 	@DeleteMapping("/firestation/address/{address}")
-	public void deleteFireStationByAdress(@PathVariable("address") String address) {
+	public void deleteFireStationByAdress(@PathVariable(value = "address", required = true) String address) {
+		logger.info("Deleting fire station mapping by address requested");
 		fireStationService.deleteFireStationByAdress(address);
 	}
 
@@ -128,7 +134,8 @@ public class FireStationController {
 	 * @param number - A station number
 	 */
 	@DeleteMapping("/firestation/station/{number}")
-	public void deleteFireStationByFireStation(@PathVariable("number") String number) {
+	public void deleteFireStationByFireStation(@PathVariable(value = "number", required = true) String number) {
+		logger.info("Deleting fire station mapping by station requested");
 		fireStationService.deleteFireStationByFireStation(number);
 	}
 

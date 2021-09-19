@@ -2,6 +2,8 @@ package com.openclassrooms.safetynetalerts.repository;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +16,10 @@ public class MedicalRecordRepository {
 	@Autowired
 	private DataSafetyNet dataSafetyNet;
 
+	private static Logger logger = LoggerFactory.getLogger(MedicalRecordRepository.class);
+
 	public List<MedicalRecord> findAll() {
+		logger.debug("Medical records list found");
 		return dataSafetyNet.getMedicalrecords();
 	}
 
@@ -28,12 +33,12 @@ public class MedicalRecordRepository {
 			}
 		}
 
-		// TODO Method to find and return the person
+		logger.debug("Medical record of a person found");
 		return resultMedicalRecord;
 	}
 
 	public MedicalRecord save(MedicalRecord medicalRecord) {
-		// TODO Add medical record in data.json
+
 		List<MedicalRecord> medicalRecordsInData = dataSafetyNet.getMedicalrecords();
 		boolean exist = false;
 		// If medical record's first and last names already in list, update
@@ -44,23 +49,23 @@ public class MedicalRecordRepository {
 				medicalRecordsInData.get(i).setBirthdate(medicalRecord.getBirthdate());
 				medicalRecordsInData.get(i).setMedications(medicalRecord.getMedications());
 				medicalRecordsInData.get(i).setAllergies(medicalRecord.getAllergies());
-
+				logger.debug("Medical record updated");
 				exist = true;
 			}
 		}
 		// If medical record not in list, add
 		if (exist == false) {
 			medicalRecordsInData.add(medicalRecord);
+			logger.debug("Medical record created");
 		}
 		// Update the global data
 		dataSafetyNet.setMedicalRecords(medicalRecordsInData);
 
-		// manage possible error in return ?
 		return medicalRecord;
 	}
 
 	public void deleteByFirstNameAndLastName(String firstName, String lastName) {
-		// TODO Delete medical record in data.json
+
 		List<MedicalRecord> medicalRecordsInData = dataSafetyNet.getMedicalrecords();
 		boolean deleted = false;
 		// If medical record's first and last names exist in list, remove it from list
@@ -70,9 +75,9 @@ public class MedicalRecordRepository {
 				medicalRecordsInData.remove(i);
 				dataSafetyNet.setMedicalRecords(medicalRecordsInData);
 				deleted = true;
+				logger.debug("Medical record deleted");
 			}
 		}
-		// manage possible error in return ?
 
 	}
 }

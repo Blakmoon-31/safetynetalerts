@@ -3,6 +3,8 @@ package com.openclassrooms.safetynetalerts.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +17,10 @@ public class FireStationRepository {
 	@Autowired
 	private DataSafetyNet dataSafetyNet;
 
+	private static Logger logger = LoggerFactory.getLogger(FireStationRepository.class);
+
 	public List<FireStation> findAll() {
+		logger.debug("Fire station list found");
 		return dataSafetyNet.getFirestations();
 	}
 
@@ -28,7 +33,7 @@ public class FireStationRepository {
 				resultStation = f;
 			}
 		}
-
+		logger.debug("Fire station mapping for an address found");
 		return resultStation;
 	}
 
@@ -41,13 +46,13 @@ public class FireStationRepository {
 				resultStationList.add(f);
 			}
 		}
-
+		logger.debug("Fire station mapping for a station found");
 		return resultStationList;
 
 	}
 
 	public FireStation save(FireStation fireStation) {
-		// TODO Add/update mapping in data.json
+
 		List<FireStation> stationsInData = dataSafetyNet.getFirestations();
 		boolean exist = false;
 		// If address already in list, update the station
@@ -56,11 +61,13 @@ public class FireStationRepository {
 
 				stationsInData.get(i).setStation(fireStation.getStation());
 				exist = true;
+				logger.debug("Fire station mapping updated");
 			}
 		}
-		// If address not in list, add
+		// If address not in list, add it
 		if (exist == false) {
 			stationsInData.add(fireStation);
+			logger.debug("Fire station mapping created");
 		}
 		// Update the global data
 		dataSafetyNet.setFirestations(stationsInData);
@@ -70,7 +77,7 @@ public class FireStationRepository {
 	}
 
 	public void deleteByAddress(String address) {
-		// TODO Delete address mapping in data.json
+
 		List<FireStation> stationsInData = dataSafetyNet.getFirestations();
 		boolean deleted = false;
 		// If address exists in list, remove it from list
@@ -79,23 +86,23 @@ public class FireStationRepository {
 				stationsInData.remove(i);
 				dataSafetyNet.setFirestations(stationsInData);
 				deleted = true;
+				logger.debug("Fire station mapping for an address deleted");
 			}
 		}
-		// manage possible error in return ?
 
 	}
 
 	public void deleteByFireStation(String number) {
-		// TODO Delete all mapping of a fire station in data.json
+
 		List<FireStation> stationsInData = dataSafetyNet.getFirestations();
 		// If fire station exists in list, remove every mapping from list
 		for (int i = stationsInData.size() - 1; i >= 0; i--) {
 			if (stationsInData.get(i).getStation().equals(number)) {
 				stationsInData.remove(i);
+				logger.debug("Fire station mapping for a station deleted");
 			}
 		}
 		dataSafetyNet.setFirestations(stationsInData);
-		// manage possible error in return ?
 
 	}
 
