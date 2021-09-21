@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.safetynetalerts.dto.ChildAlertDto;
-import com.openclassrooms.safetynetalerts.dto.ChildrenDto;
+import com.openclassrooms.safetynetalerts.dto.ChildAlertChildrenDto;
 import com.openclassrooms.safetynetalerts.dto.FireDto;
 import com.openclassrooms.safetynetalerts.dto.FloodDto;
 import com.openclassrooms.safetynetalerts.dto.FloodInhabitantsDto;
-import com.openclassrooms.safetynetalerts.dto.OtherMembersDto;
+import com.openclassrooms.safetynetalerts.dto.ChildAlertOtherMembersDto;
 import com.openclassrooms.safetynetalerts.dto.PersonInfoDto;
 import com.openclassrooms.safetynetalerts.dto.StationDto;
 import com.openclassrooms.safetynetalerts.dto.StationPersonCountDto;
@@ -181,7 +181,7 @@ public class MapDtoService {
 		ChildAlertDto childAlert = new ChildAlertDto();
 
 		// Get childs at the address
-		List<ChildrenDto> childrenList = ((List<Person>) personRepository.findByAddress(address)).stream()
+		List<ChildAlertChildrenDto> childrenList = ((List<Person>) personRepository.findByAddress(address)).stream()
 				.map(this::convertToChildrenDto).collect(Collectors.toList());
 		// Remove null entries
 		childrenList.removeIf(f -> (f.getFirstName() == null));
@@ -189,7 +189,7 @@ public class MapDtoService {
 		if (childrenList.size() > 0) {
 			childAlert.setChildren(childrenList);
 
-			List<OtherMembersDto> otherMembersList = ((List<Person>) personRepository.findByAddress(address)).stream()
+			List<ChildAlertOtherMembersDto> otherMembersList = ((List<Person>) personRepository.findByAddress(address)).stream()
 					.map(this::convertToOtherMembersdDto).collect(Collectors.toList());
 			otherMembersList.removeIf(f -> (f.getFirstName() == null));
 			childAlert.setOtherMembers(otherMembersList);
@@ -202,8 +202,8 @@ public class MapDtoService {
 
 	}
 
-	private ChildrenDto convertToChildrenDto(Person person) {
-		ChildrenDto childrenDto = new ChildrenDto();
+	private ChildAlertChildrenDto convertToChildrenDto(Person person) {
+		ChildAlertChildrenDto childrenDto = new ChildAlertChildrenDto();
 
 		MedicalRecord medicalRecord = medicalRecordService.getMedicalRecord(person.getFirstName(),
 				person.getLastName());
@@ -219,8 +219,8 @@ public class MapDtoService {
 		return childrenDto;
 	}
 
-	private OtherMembersDto convertToOtherMembersdDto(Person person) {
-		OtherMembersDto otherMembersDto = new OtherMembersDto();
+	private ChildAlertOtherMembersDto convertToOtherMembersdDto(Person person) {
+		ChildAlertOtherMembersDto otherMembersDto = new ChildAlertOtherMembersDto();
 
 		MedicalRecord medicalRecord = medicalRecordService.getMedicalRecord(person.getFirstName(),
 				person.getLastName());

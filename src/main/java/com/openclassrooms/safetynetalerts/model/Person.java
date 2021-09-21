@@ -18,7 +18,7 @@ public class Person {
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName - the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -32,7 +32,7 @@ public class Person {
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName - the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -46,7 +46,7 @@ public class Person {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address - the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -60,7 +60,7 @@ public class Person {
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city - the city to set
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -74,7 +74,7 @@ public class Person {
 	}
 
 	/**
-	 * @param zip the zip to set
+	 * @param zip - the zip to set
 	 */
 	public void setZip(String zip) {
 		this.zip = zip;
@@ -88,7 +88,7 @@ public class Person {
 	}
 
 	/**
-	 * @param phone the phone to set
+	 * @param phone - the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -102,7 +102,7 @@ public class Person {
 	}
 
 	/**
-	 * @param email the email to set
+	 * @param email - the email to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;

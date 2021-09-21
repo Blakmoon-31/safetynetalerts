@@ -21,7 +21,7 @@ public class FloodInhabitantsDto {
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName - the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -35,7 +35,7 @@ public class FloodInhabitantsDto {
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName - the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -49,7 +49,7 @@ public class FloodInhabitantsDto {
 	}
 
 	/**
-	 * @param phone the phone to set
+	 * @param phone - the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -63,7 +63,7 @@ public class FloodInhabitantsDto {
 	}
 
 	/**
-	 * @param medications the medications to set
+	 * @param medications - the list medications to set
 	 */
 	public void setMedications(List<String> medications) {
 		this.medications = medications;
@@ -77,7 +77,7 @@ public class FloodInhabitantsDto {
 	}
 
 	/**
-	 * @param allergies the allergies to set
+	 * @param allergies - the list allergies to set
 	 */
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
@@ -91,7 +91,7 @@ public class FloodInhabitantsDto {
 	}
 
 	/**
-	 * @param age the age to set
+	 * @param age - the age to set
 	 */
 	public void setAge(int age) {
 		this.age = age;

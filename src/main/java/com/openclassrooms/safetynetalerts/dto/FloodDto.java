@@ -15,7 +15,7 @@ public class FloodDto {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address - the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -29,7 +29,7 @@ public class FloodDto {
 	}
 
 	/**
-	 * @param inhabitants the inhabitants to set
+	 * @param inhabitants - the list inhabitants to set
 	 */
 	public void setInhabitants(List<FloodInhabitantsDto> inhabitants) {
 		this.inhabitants = inhabitants;

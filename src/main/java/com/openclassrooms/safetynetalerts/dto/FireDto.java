@@ -23,7 +23,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName - the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -37,7 +37,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName - the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -51,7 +51,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param phone the phone to set
+	 * @param phone - the phone to set
 	 */
 	public void setPhone(String phone) {
 		this.phone = phone;
@@ -65,7 +65,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param medications the medications to set
+	 * @param medications - the list medications to set
 	 */
 	public void setMedications(List<String> medications) {
 		this.medications = medications;
@@ -79,7 +79,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param allergies the allergies to set
+	 * @param allergies - the list allergies to set
 	 */
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
@@ -93,7 +93,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param station the station to set
+	 * @param station - the station to set
 	 */
 	public void setStation(String station) {
 		this.station = station;
@@ -107,7 +107,7 @@ public class FireDto {
 	}
 
 	/**
-	 * @param age the age to set
+	 * @param age - the age to set
 	 */
 	public void setAge(int age) {
 		this.age = age;

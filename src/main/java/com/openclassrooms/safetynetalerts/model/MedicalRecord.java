@@ -28,7 +28,7 @@ public class MedicalRecord {
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName - the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -42,7 +42,7 @@ public class MedicalRecord {
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName - the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -56,7 +56,7 @@ public class MedicalRecord {
 	}
 
 	/**
-	 * @param birthdate the birthdate to set
+	 * @param birthdate - the birthdate to set
 	 */
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
@@ -70,7 +70,7 @@ public class MedicalRecord {
 	}
 
 	/**
-	 * @param medications the medications to set
+	 * @param medications - the list medications to set
 	 */
 	public void setMedications(List<String> medications) {
 		this.medications = medications;
@@ -84,7 +84,7 @@ public class MedicalRecord {
 	}
 
 	/**
-	 * @param allergies the allergies to set
+	 * @param allergies - the list allergies to set
 	 */
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;

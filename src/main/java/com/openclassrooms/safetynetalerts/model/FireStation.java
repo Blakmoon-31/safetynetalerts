@@ -13,7 +13,7 @@ public class FireStation {
 	}
 
 	/**
-	 * @param address the address to set
+	 * @param address - the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -27,7 +27,7 @@ public class FireStation {
 	}
 
 	/**
-	 * @param station the station to set
+	 * @param station - the station to set
 	 */
 	public void setStation(String station) {
 		this.station = station;

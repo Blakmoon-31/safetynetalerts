@@ -4,34 +4,34 @@ import java.util.List;
 
 public class ChildAlertDto {
 
-	private List<ChildrenDto> children;
-	private List<OtherMembersDto> otherMembers;
+	private List<ChildAlertChildrenDto> children;
+	private List<ChildAlertOtherMembersDto> otherMembers;
 
 	/**
-	 * @return the child
+	 * @return the children list
 	 */
-	public List<ChildrenDto> getChildren() {
+	public List<ChildAlertChildrenDto> getChildren() {
 		return children;
 	}
 
 	/**
-	 * @param child the child to set
+	 * @param children - the list children to set
 	 */
-	public void setChildren(List<ChildrenDto> children) {
+	public void setChildren(List<ChildAlertChildrenDto> children) {
 		this.children = children;
 	}
 
 	/**
-	 * @return the otherMember
+	 * @return the otherMembers
 	 */
-	public List<OtherMembersDto> getOtherMembers() {
+	public List<ChildAlertOtherMembersDto> getOtherMembers() {
 		return otherMembers;
 	}
 
 	/**
-	 * @param otherMember the otherMember to set
+	 * @param otherMembers - the list otherMembers to set
 	 */
-	public void setOtherMembers(List<OtherMembersDto> otherMembers) {
+	public void setOtherMembers(List<ChildAlertOtherMembersDto> otherMembers) {
 		this.otherMembers = otherMembers;
 	}
 

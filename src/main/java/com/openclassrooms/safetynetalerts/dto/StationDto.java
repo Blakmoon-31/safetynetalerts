@@ -15,7 +15,7 @@ public class StationDto {
 	}
 
 	/**
-	 * @param persons the persons to set
+	 * @param persons - the list persons to set
 	 */
 	public void setPersons(List<StationPersonDto> persons) {
 		this.persons = persons;
@@ -29,7 +29,7 @@ public class StationDto {
 	}
 
 	/**
-	 * @param count the count to set
+	 * @param count - the count to set
 	 */
 	public void setCount(StationPersonCountDto count) {
 		this.count = count;

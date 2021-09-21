@@ -26,7 +26,7 @@ public class DataSafetyNet {
 	}
 
 	/**
-	 * @param persons the persons to set
+	 * @param persons - the list persons to set
 	 */
 	public void setPersons(List<Person> persons) {
 		this.persons = persons;
@@ -40,7 +40,7 @@ public class DataSafetyNet {
 	}
 
 	/**
-	 * @param fireStations the fireStations to set
+	 * @param fireStations - the list fireStations to set
 	 */
 	public void setFirestations(List<FireStation> firestations) {
 		this.firestations = firestations;
@@ -54,7 +54,7 @@ public class DataSafetyNet {
 	}
 
 	/**
-	 * @param medicalRecords the medicalRecords to set
+	 * @param medicalRecords - the list medicalRecords to set
 	 */
 	public void setMedicalRecords(List<MedicalRecord> medicalrecords) {
 		this.medicalrecords = medicalrecords;

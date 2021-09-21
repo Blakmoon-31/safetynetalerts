@@ -13,21 +13,21 @@ public class StationPersonCountDto {
 	}
 
 	/**
-	 * @param adults the adults to set
+	 * @param adults - the adults to set
 	 */
 	public void setAdults(int adults) {
 		this.adults = adults;
 	}
 
 	/**
-	 * @return the childs
+	 * @return the children
 	 */
 	public int getChildren() {
 		return children;
 	}
 
 	/**
-	 * @param childs the childs to set
+	 * @param children - the children to set
 	 */
 	public void setChildren(int children) {
 		this.children = children;

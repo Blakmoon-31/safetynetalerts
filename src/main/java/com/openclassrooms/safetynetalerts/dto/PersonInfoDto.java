@@ -22,7 +22,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param firstName the firstName to set
+	 * @param firstName - the firstName to set
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -36,7 +36,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param lastName the lastName to set
+	 * @param lastName - the lastName to set
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -50,7 +50,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param phone the phone to set
+	 * @param phone - the phone to set
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -64,7 +64,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param addressString the addressString to set
+	 * @param address - the address to set
 	 */
 	public void setAddress(String address) {
 		this.address = address;
@@ -78,7 +78,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param medications the medications to set
+	 * @param medications - the list medications to set
 	 */
 	public void setMedications(List<String> medications) {
 		this.medications = medications;
@@ -92,7 +92,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param allergies the allergies to set
+	 * @param allergies - the list allergies to set
 	 */
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
@@ -106,7 +106,7 @@ public class PersonInfoDto {
 	}
 
 	/**
-	 * @param age the age to set
+	 * @param age - the age to set
 	 */
 	public void setAge(int age) {
 		this.age = age;
