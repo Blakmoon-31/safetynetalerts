@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.openclassrooms.safetynetalerts.configuration.SwaggerConfiguration;
 import com.openclassrooms.safetynetalerts.model.FireStation;
 import com.openclassrooms.safetynetalerts.service.FireStationService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(tags = { SwaggerConfiguration.FIRE_STATION_TAG })
 public class FireStationController {
 
 	@Autowired
@@ -32,6 +37,7 @@ public class FireStationController {
 	 * 
 	 * @return - An Iterable object of FireStation full filled
 	 */
+	@ApiOperation(value = "Retrieves the fire stations/addresses mapping list")
 	@GetMapping("/firestations")
 	public List<FireStation> getFireStations() {
 		logger.info("Fire stations mapping list requested");
@@ -44,6 +50,7 @@ public class FireStationController {
 	 * @param adress - The address of the mapping
 	 * @return - An object FireStation full filled
 	 */
+	@ApiOperation(value = "Retrieves the fire station mapping for an address")
 	@GetMapping("/firestation/address/{adress}")
 	public FireStation getFireStationByAdress(@PathVariable("adress") String adress) {
 		logger.info("Fire station for an address requested");
@@ -56,6 +63,7 @@ public class FireStationController {
 	 * @param number - The number of the station
 	 * @return - An object FireStation full filled
 	 */
+	@ApiOperation(value = "Retrieves the fire station mapping for a station number")
 	@GetMapping("/firestation/station/{number}")
 	public List<FireStation> getFireStationByFireStation(@PathVariable("number") String number) {
 		logger.info("Addresses list for a station requested");
@@ -69,6 +77,7 @@ public class FireStationController {
 	 * @return - The HTTP code "201" and URI if object created, HTTP code "204" if
 	 *         not
 	 */
+	@ApiOperation(value = "Adds a fire station mapping")
 	@PostMapping("/firestation")
 	public ResponseEntity<Void> createFireStation(@RequestBody FireStation fireStation) {
 
@@ -98,6 +107,7 @@ public class FireStationController {
 	 * @param fireStation - An object FireStation
 	 * @return - The FireStation object updated
 	 */
+	@ApiOperation(value = "Updates a fire station mapping for an address")
 	@PutMapping("/firestation/{address}")
 	public FireStation updateFireStation(@PathVariable("address") String address,
 			@RequestBody FireStation fireStation) {
@@ -122,6 +132,7 @@ public class FireStationController {
 	 * 
 	 * @param address - An address
 	 */
+	@ApiOperation(value = "deletes fire station mapping of an address")
 	@DeleteMapping("/firestation/address/{address}")
 	public void deleteFireStationByAdress(@PathVariable(value = "address", required = true) String address) {
 		logger.info("Deleting fire station mapping by address requested");
@@ -133,6 +144,7 @@ public class FireStationController {
 	 * 
 	 * @param number - A station number
 	 */
+	@ApiOperation(value = "Deletes fire station mapping for a station number")
 	@DeleteMapping("/firestation/station/{number}")
 	public void deleteFireStationByFireStation(@PathVariable(value = "number", required = true) String number) {
 		logger.info("Deleting fire station mapping by station requested");

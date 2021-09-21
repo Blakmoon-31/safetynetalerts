@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.openclassrooms.safetynetalerts.configuration.SwaggerConfiguration;
 import com.openclassrooms.safetynetalerts.model.MedicalRecord;
 import com.openclassrooms.safetynetalerts.service.MedicalRecordService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
+@Api(tags = { SwaggerConfiguration.MEDICAL_RECORDS_TAG })
 public class MedicalRecordController {
 
 	@Autowired
@@ -33,6 +38,7 @@ public class MedicalRecordController {
 	 * 
 	 * @return - An Iterable object of MedicalRecord full filled
 	 */
+	@ApiOperation(value = "Retrieves medical records list")
 	@GetMapping("/medicalrecords")
 	public List<MedicalRecord> getMedicalrecords() {
 		logger.info("Medical records list requested");
@@ -46,6 +52,7 @@ public class MedicalRecordController {
 	 * @param lastName  - The lastName of the concerned person
 	 * @return - An object MedicalRecord full filled
 	 */
+	@ApiOperation(value = "Retrieves a medical record by first and last name")
 	@GetMapping("/medicalrecord/{firstName}/{lastName}")
 	public MedicalRecord getMedicalRecord(@PathVariable("firstName") String firstName,
 			@PathVariable("lastName") String lastName) {
@@ -60,6 +67,7 @@ public class MedicalRecordController {
 	 * @return - The HTTP code "201" and URI if object created, HTTP code "204" if
 	 *         not
 	 */
+	@ApiOperation(value = "Adds a medical record")
 	@PostMapping("/medicalrecord")
 	public ResponseEntity<Void> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
 
@@ -83,6 +91,7 @@ public class MedicalRecordController {
 	 * @param medicalRecord - An object MedicalRecord
 	 * @return - The MedicalRecord object updated
 	 */
+	@ApiOperation(value = "Updates a medical record by first and last name")
 	@PutMapping("/medicalrecord/{firstName}/{lastName}")
 	public MedicalRecord updateMedicalRecord(@PathVariable("firstName") String firstName,
 			@PathVariable("lastName") String lastName, @RequestBody MedicalRecord medicalRecord) {
@@ -119,6 +128,7 @@ public class MedicalRecordController {
 	 * @param firstName - The firstName of the concerned person
 	 * @param lastName  - The lastName of the concerned person
 	 */
+	@ApiOperation(value = "Delete a medical record by first and last name")
 	@DeleteMapping("/medicalrecord/{firstName}/{lastName}")
 	public void deleteMedicalRecord(@PathVariable(value = "firstName", required = true) String firstName,
 			@PathVariable(value = "lastName", required = true) String lastName) {

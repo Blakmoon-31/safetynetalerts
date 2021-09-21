@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.openclassrooms.safetynetalerts.configuration.SwaggerConfiguration;
 import com.openclassrooms.safetynetalerts.model.Person;
 import com.openclassrooms.safetynetalerts.service.PersonService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags = { SwaggerConfiguration.PERSONS_TAG })
 @RestController
 public class PersonController {
 
@@ -32,6 +37,7 @@ public class PersonController {
 	 * 
 	 * @return - An Iterable object of Person full filled
 	 */
+	@ApiOperation(value = "Retrieves the list of persons")
 	@GetMapping("/persons")
 	public List<Person> getPersons() {
 		logger.info("Persons list requested");
@@ -45,6 +51,7 @@ public class PersonController {
 	 * @param lastName  - The lastName of the person
 	 * @return - An object Person full filled
 	 */
+	@ApiOperation(value = "Retrieves a person by first and last names")
 	@GetMapping("/person/{firstName}/{lastName}")
 	public Person getPerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
 		logger.info("One person requested");
@@ -58,6 +65,7 @@ public class PersonController {
 	 * @return - The HTTP code "201" and URI if object created, HTTP code "204" if
 	 *         not
 	 */
+	@ApiOperation(value = "Adds a person")
 	@PostMapping("/person")
 	public ResponseEntity<Void> createPerson(@RequestBody Person person) {
 
@@ -84,6 +92,7 @@ public class PersonController {
 	 * @param person    - An object Person
 	 * @return - The Person object updated
 	 */
+	@ApiOperation(value = "Updates a person")
 	@PutMapping("/person/{firstName}/{lastName}")
 	public Person updatePerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName,
 			@RequestBody Person person) {
@@ -131,6 +140,7 @@ public class PersonController {
 	 * @param firstName - The firstName of the person
 	 * @param lastName  - The lastName of the person
 	 */
+	@ApiOperation(value = "Deletes a person by first and last name")
 	@DeleteMapping("/person/{firstName}/{lastName}")
 	public Person deletePerson(@PathVariable(value = "firstName", required = true) String firstName,
 			@PathVariable(value = "lastName", required = true) String lastName) {
